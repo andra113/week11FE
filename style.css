@@ -105,6 +105,11 @@ body {
   margin-top: 136px;
 }
 
+.form-input {
+  display: flex;
+  align-items: center;
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
@@ -118,6 +123,7 @@ body {
   width: 4.625rem;
   height: 1.875rem;
   margin-top: 0.25rem;
+  margin-left: -11.5625rem;
   border-radius: 50px;
 }
 
@@ -165,6 +171,10 @@ label {
   overflow: auto;
 }
 
+.transaction-text, .transaction-list {
+  margin-left: -158px;
+}
+
 .transaction-list li {
   color: var(--cozy--brown);
   list-style: none;
@@ -182,4 +192,45 @@ label {
   height: 7.25rem;
   color: var(--cozy--brown);
   background-color: var(--mossy-green);
+}
+
+
+@media (max-width: 576px) {
+  .form-input {
+    flex-direction: column;
+    justify-content: center;
+    margin-left: -3.5rem;
+  }
+
+  .big {
+    width: 15.5625rem;
+  }
+
+  .add-btn {
+    margin-left: -3.5625rem;
+  }
+
+  .bottom-wrapper {
+    flex-direction: column;
+    margin-left: -3.125rem;
+  }
+
+  .aside-container {
+    display: none;
+  }
+
+  .transaction-text, .transaction-list {
+    margin-left: -83px;
+}
+
+.transaction-list {
+  width: 80vw;
+}
+
+}
+
+@media (max-width: 820px) {
+  .aside-container {
+    display: none;
+  }
 }
