@@ -12,32 +12,75 @@
     <title>Financial Tracker</title>
 </head>
 
-<body>
-    <header>
-        <nav class="nav-bar">
 
-        </nav>
+<body>
+    <header class="header-container">
+        <h1>RESERVED NAME</h1>
     </header>
 
-    <form class="form-input">
-        <div class="field">
-            <label for="type">Type</label>
-            <select name="type" id="type" class="input-box">
-                <option value="cash in">Cash In </option>
-                <option value="cash out">Cash out</option>
-            </select>
-        </div>
-        <div class="field">
-            <label for="amount">Details</label>
-            <input type="text" id="details" class="input-box big">
-            <!-- <button id="addButton">add</button> -->
-        </div>
-        <div class="field">
-            <label for="amount">Amount</label>
-            <input type="number" id="amount" class="input-box medium">
-        </div>
-    </form>
-    <ul id="transactionList"></ul>
+    <div class="content-container">
+        <aside class="aside-container">
+            <!DOCTYPE html>
+            <img src="/images/mental-health.png" alt="" class=" navbar-pic">
+            <ul class="nav-links">
+                <li><a href="">Home</a></li>
+                <hr>
+                <li><a href="">Dashboard</a></li>
+                <hr>
+                <li><a href="">My Cards</a></li>
+                <hr>
+                <li><a href="">Accounts</a></li>
+                
+            </ul>
+        </aside>
+
+
+        <main class="main-container">
+            <form class="form-input">
+                <div class="form-wrapper">
+                    <div class="form-field">
+                        <label for="type">Type</label>
+                        <select name="type" id="type" class="input-box">
+                            <option value="cash in">Cash In </option>re
+                            <option value="cash out">Cash out</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="amount">Details</label>
+                        <input type="text" id="details" class="input-box big">
+
+                    </div>
+                    <div class="form-field">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" class="input-box medium">
+                    </div>
+                </div>
+            </form>
+            <button id="addButton" class="add-btn">ADD</button>
+            <p class="transaction-text">Transaction List</p>
+            <ul id="transactionList" class="transaction-list">
+                
+            </ul>
+            <div class="bottom-wrapper">
+                <div class="display-card">
+                    <h3>BALANCE</h3>
+                    <h2 id="balance"></h2>
+                </div>
+
+                <div class="display-card">
+                    <h3>TOTAL INCOME</h3>
+                    <h2 id="income"></h2>
+                </div>
+
+                <div class="display-card">
+                    <h3>TOTAL EXPENSES</h3>
+                    <h2 id="expenses"></h2>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
 
     <script src="/script/app.js"></script>
 </body>
