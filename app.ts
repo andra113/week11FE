@@ -1,74 +1,76 @@
-//Import html element with DOM
-const typeSelect = document.getElementById("type") as HTMLSelectElement;
-const amountInput = document.getElementById("amount") as HTMLInputElement;
-const detailsInput = document.getElementById("details") as HTMLInputElement;
-const list = document.getElementById("transactionList") as HTMLUListElement;
-const addButton = document.getElementById("addButton") as HTMLButtonElement;
-const balanceDisplay: HTMLElement | null = document.getElementById("balance")!;
-const totalIncomeDisplay: HTMLElement | null =
-  document.getElementById("income")!;
-const totalExpensesDisplay: HTMLElement | null =
-  document.getElementById("expenses")!;
-interface transaction {
+interface Transaction {
   details: string;
   amount: number;
 }
 
-interface account {
+interface Account {
   name: string;
   balance: number;
   totalIncome: number;
   totalExpenses: number;
 }
 
-let accountProfile: account = {
+const typeSelect = document.getElementById("type") as HTMLSelectElement;
+const amountInput = document.getElementById("amount") as HTMLInputElement;
+const detailsInput = document.getElementById("details") as HTMLInputElement;
+const list = document.getElementById("transactionList") as HTMLUListElement;
+const addButton = document.getElementById("addButton") as HTMLButtonElement;
+const balanceDisplay = document.getElementById("balance")!;
+const totalIncomeDisplay = document.getElementById("income")!;
+const totalExpensesDisplay = document.getElementById("expenses")!;
+
+const accountProfile: Account = {
   name: "",
   balance: 0,
   totalIncome: 0,
   totalExpenses: 0,
 };
 
-balanceDisplay.textContent = `$${accountProfile.balance.toFixed(2)}`;
-totalIncomeDisplay.textContent = `$${accountProfile.totalIncome.toFixed(2)}`;
-totalExpensesDisplay.textContent = `$${accountProfile.totalExpenses.toFixed(
-  2
-)}`;
+function updateDisplays() {
+  balanceDisplay.textContent = `$${accountProfile.balance.toFixed(2)}`;
+  totalIncomeDisplay.textContent = `$${accountProfile.totalIncome.toFixed(2)}`;
+  totalExpensesDisplay.textContent = `$${accountProfile.totalExpenses.toFixed(2)}`;
+}
 
 function addBalance(amount: number): number {
   accountProfile.balance += amount;
   return accountProfile.balance;
+  updateDisplays();
 }
 
 function subtractBalance(amount: number): number {
   accountProfile.balance -= amount;
-  return accountProfile.balance;
+  return accountProfile.balance
+  updateDisplays();
 }
 
 function addTotalIncome(amount: number): number {
   accountProfile.totalIncome += amount;
-  return accountProfile.totalIncome;
+  return accountProfile.totalIncome
+  updateDisplays();
 }
 
 function addTotalExpenses(amount: number): number {
   accountProfile.totalExpenses += amount;
   return accountProfile.totalExpenses;
+  updateDisplays();
 }
 
-const transactionList: transaction[] = [];
+const transactionList: Transaction[] = [];
 
-function inputTransaction() {
+function inputTransaction(): void {
   const details = detailsInput.value;
   const amount = parseFloat(amountInput.value);
 
-  const newTransactionList: transaction = {
+  const newTransaction: Transaction = {
     details: details,
     amount: amount,
   };
 
-  transactionList.push(newTransactionList);
+  transactionList.push(newTransaction);
 }
 
-function displayTransaction() {
+function displayTransaction(): void {
   list.innerHTML = "";
   transactionList.forEach((transaction, index) => {
     const li = document.createElement("li");
@@ -79,26 +81,23 @@ function displayTransaction() {
 
 addButton?.addEventListener("click", (event) => {
   event.preventDefault();
-  if (amountInput.value != "" && detailsInput.value != "") {
+  if (amountInput.value !== "" && detailsInput.value !== "") {
     inputTransaction();
     displayTransaction();
-    if (typeSelect.value == "cash in") {
-      addTotalIncome(parseFloat(amountInput.value));
-      addBalance(parseFloat(amountInput.value));
+    const transactionAmount = parseFloat(amountInput.value);
+    if (typeSelect.value === "cash in") {
+      addTotalIncome(transactionAmount);
+      addBalance(transactionAmount);
     } else {
-      addTotalExpenses(parseFloat(amountInput.value));
-      subtractBalance(parseFloat(amountInput.value));
+      addTotalExpenses(transactionAmount);
+      subtractBalance(transactionAmount);
     }
-    balanceDisplay.textContent = `$${accountProfile.balance.toFixed(2)}`;
-    totalIncomeDisplay.textContent = `$${accountProfile.totalIncome.toFixed(
-      2
-    )}`;
-    totalExpensesDisplay.textContent = `$${accountProfile.totalExpenses.toFixed(
-      2
-    )}`;
     amountInput.value = "";
     detailsInput.value = "";
   } else {
-    alert("isi woi");
+    alert("Please fill in both details and amount.");
   }
 });
+
+// Initialize displays
+updateDisplays();
