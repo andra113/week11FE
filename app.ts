@@ -30,7 +30,7 @@ interface ApiResponse {
 
 async function fetchSchoolData() {
   try {
-    const response = await fetch('http://localhost:8000/api/noauth/schools');
+    const response = await fetch('https://week11-production.up.railway.app/api/noauth/schools');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }

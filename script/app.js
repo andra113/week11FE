@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 function fetchSchoolData() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch('http://localhost:8000/api/noauth/schools');
+            const response = yield fetch('https://week11-production.up.railway.app/api/noauth/schools');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
