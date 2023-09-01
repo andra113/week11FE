@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,149 +8,170 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// import { inputTransaction } from "./transactionFunctions";
-// import { inputTransaction } from "./transactionFunctions";
-import { transactions } from "./transactions";
-;
-let account = {
-    balance: 0,
-    totalExpenses: 0,
-    totalIncome: 0,
-};
-const typeTransactionSelect = document.getElementById("type");
-const amountTransactionInput = document.getElementById("amount");
-const detailTransactionInput = document.getElementById("details");
-const list = document.getElementById("transactionList");
-const addButton = document.getElementById("addButton");
-const balanceDisplay = document.getElementById("balance");
-const totalIncomeDisplay = document.getElementById("income");
-const totalExpensesDisplay = document.getElementById("expenses");
-function fetchTransaction() {
-    fetch("https://api-week8-andra.up.railway.app/transactions")
-        .then((response) => response.json())
-        .then((transactionsAPI) => {
-        transactions.push(...transactionsAPI);
-        displayTransaction(transactions);
-        calculatedTotals(transactions);
-        console.log("Succeeded to fetch API ");
-    })
-        .catch((error) => {
-        console.error(error);
-    });
-}
-function displayTransaction(transactions) {
-    list.innerHTML = "";
-    transactions.forEach((transaction, index) => {
-        const li = document.createElement("li");
-        li.textContent = `Type: ${transaction.type} - Detail: ${transaction.detail} - Amount: ${transaction.amount}`;
-        list.appendChild(li);
-    });
-}
-/// to calculate balance, total expenses and total income
-function calculatedTotals(transactions) {
-    transactions.forEach((transaction) => {
-        if (transaction.type === "cash in") {
-            addTotalIncome(transaction.amount);
-        }
-        else {
-            addTotalExpenses(transaction.amount);
-        }
-        account.balance = account.totalIncome - account.totalExpenses;
-        updateDisplays(account);
-    });
-}
-function postTransactionAPI(transaction) {
-    fetch("https://api-week8-andra.up.railway.app/transactions", {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ transaction }),
-    })
-        .then((response) => response.json())
-        .then((newTransaction) => {
-        console.log(`Succeeded to push to api: ${newTransaction}`);
-    })
-        .catch((error) => {
-        console.error(error);
-    });
-}
-function addTransaction(type, detail, amount) {
+function fetchSchoolData() {
     return __awaiter(this, void 0, void 0, function* () {
-        const newTransaction = {
-            type: type,
-            detail: detail,
-            amount: amount,
-        };
         try {
-            const response = yield fetch("https://api-week8-andra.up.railway.app/transactions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newTransaction),
-            });
-            if (response.ok) {
-                const createdTransaction = yield response.json();
-                console.log("New transaction added:", createdTransaction);
-                if (createdTransaction.type === "cash in") {
-                    addTotalIncome(createdTransaction.amount);
-                }
-                else {
-                    addTotalExpenses(createdTransaction.amount);
-                }
-                ;
-                account.balance = account.totalIncome - account.totalExpenses;
-                updateDisplays(account);
-                transactions.push(createdTransaction);
-                displayTransaction(transactions);
+            const response = yield fetch('http://localhost:8000/api/noauth/schools');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const responseData = yield response.json();
+            if (responseData.success) {
+                displaySchools(responseData.data);
             }
             else {
-                console.error("Failed to add transaction:", response.statusText);
+                console.error('API request was successful, but an error occurred:', responseData.message);
             }
         }
         catch (error) {
-            console.error("Error adding transaction:", error);
+            console.error('Error fetching data:', error);
         }
     });
 }
-function addBalance(amount) {
-    account.balance += amount;
-    return account.balance;
-}
-function subtractBalance(amount) {
-    account.balance -= amount;
-    return account.balance;
-}
-function addTotalIncome(amount) {
-    account.totalIncome += amount;
-    return account.totalIncome;
-}
-function addTotalExpenses(amount) {
-    account.totalExpenses += amount;
-    return account.totalExpenses;
-}
-function updateDisplays(account) {
-    balanceDisplay.textContent = `$${account.balance.toFixed(0)}`;
-    totalIncomeDisplay.textContent = `RP${account.totalIncome.toFixed(0)}`;
-    totalExpensesDisplay.textContent = `$${account.totalExpenses.toFixed(0)}`;
-}
-fetchTransaction();
-addButton === null || addButton === void 0 ? void 0 : addButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    const typeSelect = typeTransactionSelect.value;
-    const detailInput = detailTransactionInput.value;
-    const amountInput = parseInt(amountTransactionInput.value);
-    if (amountTransactionInput.value !== "" &&
-        detailTransactionInput.value !== "") {
-        addTransaction(typeSelect, detailInput, amountInput);
-        amountTransactionInput.value = "";
-        detailTransactionInput.value = "";
+function displaySchools(schools) {
+    const schoolContainer = document.getElementById('schoolContainer');
+    if (!schoolContainer) {
+        return;
     }
-    else {
-        alert("Please fill in both details and amount.");
-    }
-});
+    schools.forEach((school) => {
+        const schoolDiv = document.createElement('div');
+        schoolDiv.classList.add('school-card');
+        const content = `
+      <h2>${school.name}</h2>
+      <img src="${school.imgUrl}" alt="${school.name} Image" class="school-image">
+      <p><strong>Location:</strong> ${school.location}</p>
+      <p><strong>Description:</strong> ${school.description}</p>
+      <p><strong>Rating:</strong></p>
+      <ul>
+        <li><strong>Reputation:</strong> ${school.rating.reputation}</li>
+        <li><strong>Location:</strong> ${school.rating.location}</li>
+        <li><strong>Facilities:</strong> ${school.rating.facilities}</li>
+      </ul>
+    `;
+        schoolDiv.innerHTML = content;
+        schoolContainer.appendChild(schoolDiv);
+    });
+}
+fetchSchoolData();
+// function fetchTransaction() {
+//   fetch("https://api-week8-andra.up.railway.app/transactions")
+//     .then((response: Response) => response.json())
+//     .then((transactionsAPI: Transaction[]) => {
+//       transactions.push(...transactionsAPI);
+//       displayTransaction(transactions);
+//       calculatedTotals(transactions)
+//       console.log("Succeeded to fetch API ");
+//     })
+//     .catch((error: Error) => {
+//       console.error(error);
+//     });
+// }
+// function displayTransaction(transactions: Transaction[]) {
+//   list.innerHTML = "";
+//   transactions.forEach((transaction, index) => {
+//     const li = document.createElement("li");
+//     li.textContent = `Type: ${transaction.type} - Detail: ${transaction.detail} - Amount: ${transaction.amount}`;
+//     list.appendChild(li);
+//   });
+// }
+// /// to calculate balance, total expenses and total income
+// function calculatedTotals(transactions: Transaction[]) {
+//     transactions.forEach((transaction) => {
+//       if (transaction.type === "cash in") {
+//         addTotalIncome(transaction.amount)
+//       } else {
+//         addTotalExpenses(transaction.amount)
+//       }
+//       account.balance = account.totalIncome - account.totalExpenses
+//       updateDisplays(account)
+//     });
+//   }
+// function postTransactionAPI(transaction: Transaction) {
+//   fetch("https://api-week8-andra.up.railway.app/transactions", {
+//     method: 'POST',
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({transaction}),
+//   })
+//     .then((response: Response) => response.json())
+//     .then((newTransaction) => {
+//       console.log(`Succeeded to push to api: ${newTransaction}`);
+//     })
+//     .catch((error: Error) => {
+//       console.error(error);
+//     });
+// }
+// async function addTransaction(type: string, detail: string, amount: number) {
+//   const newTransaction = {
+//     type: type,
+//     detail: detail,
+//     amount: amount,
+//   };
+//   try {
+//     const response = await fetch("https://api-week8-andra.up.railway.app/transactions", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(newTransaction),
+//     });
+//     if (response.ok) {
+//       const createdTransaction = await response.json();
+//       console.log("New transaction added:", createdTransaction);
+//       if (createdTransaction.type === "cash in") {
+//         addTotalIncome(createdTransaction.amount);
+//       } else {
+//         addTotalExpenses(createdTransaction.amount);
+//       };
+//       account.balance = account.totalIncome - account.totalExpenses
+//       updateDisplays(account)
+//       transactions.push(createdTransaction);
+//       displayTransaction(transactions);
+//     } else {
+//       console.error("Failed to add transaction:", response.statusText);
+//     }
+//   } catch (error) {
+//     console.error("Error adding transaction:", error);
+//   }
+// }
+// function addBalance(amount: number): number {
+//   account.balance += amount;
+//   return account.balance;
+// }
+// function subtractBalance(amount: number): number {
+//   account.balance -= amount;
+//   return account.balance;
+// }
+// function addTotalIncome(amount: number): number {
+//   account.totalIncome += amount;
+//   return account.totalIncome
+// }
+// function addTotalExpenses(amount: number): number {
+//   account.totalExpenses += amount;
+//   return account.totalExpenses;
+// }
+// function updateDisplays(account: Account) {
+//   balanceDisplay.textContent = `$${account.balance.toFixed(0)}`;
+//   totalIncomeDisplay.textContent = `RP${account.totalIncome.toFixed(0)}`;
+//   totalExpensesDisplay.textContent = `$${account.totalExpenses.toFixed(0)}`;
+// }
+// addButton?.addEventListener("click", (event) => {
+//   event.preventDefault();
+//   const typeSelect = typeTransactionSelect.value;
+//   const detailInput = detailTransactionInput.value;
+//   const amountInput = parseInt(amountTransactionInput.value);
+//   if (
+//     amountTransactionInput.value !== "" &&
+//     detailTransactionInput.value !== ""
+//   ) {
+//     addTransaction(typeSelect, detailInput, amountInput);
+//     amountTransactionInput.value = "";
+//     detailTransactionInput.value = "";
+//   } else {
+//     alert("Please fill in both details and amount.");
+//   }
+// });
 //  import { transactions } from "./transactions";
 //  interface Account {
 //   name: string;

@@ -15,70 +15,15 @@
 
 <body>
     <header class="header-container">
-        <h1>PIGGY BANK</h1>
+        <h1>RATE MY UNIVERSITY</h1>
     </header>
 
-    <div class="content-container">
-        <aside class="aside-container">
-            <!DOCTYPE html>
-            <img src="/images/mental-health.png" alt="" class=" navbar-pic">
-            <ul class="nav-links">
-                <li><a href="">Home</a></li>
-                <hr>
-                <li><a href="">Dashboard</a></li>
-                <hr>
-                <li><a href="">My Cards</a></li>
-                <hr>
-                <li><a href="">Accounts</a></li>
+    <img class="gambar" src="https://img.freepik.com/free-vector/student-campus-flat-composition-with-university-building-background-vector-illustration_1284-81556.jpg?w=1380&t=st=1693513992~exp=1693514592~hmac=9d2f36832d957e9807a60ad2fbfee5cd58d6e607ae76b069bfa377793d4609dc"
+        alt="gambar">
 
-            </ul>
-        </aside>
+    <div class="school-container" id="schoolContainer"></div>
 
-
-        <main class="main-container">
-            <div class="form-wrapper">
-                <form class="form-input">
-                    <div class="form-field">
-                        <label for="type">Type</label>
-                        <select name="type" id="type" class="input-box">
-                            <option value="cash in">Cash In </option>re
-                            <option value="cash out">Cash out</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <label for="amount">Details</label>
-                        <input type="text" id="details" class="input-box big">
-
-                    </div>
-                    <div class="form-field">
-                        <label for="amount">Amount</label>
-                        <input type="number" id="amount" class="input-box medium">
-                    </div>
-                </form>
-            </div>
-            <button id="addButton" class="add-btn">ADD</button>
-            <p class="transaction-text">Transaction List</p>
-            <ul id="transactionList" class="transaction-list">
-
-            </ul>
-            <div class="bottom-wrapper">
-                <div class="display-card">
-                    <h3>BALANCE</h3>
-                    <h2 id="balance"></h2>
-                </div>
-
-                <div class="display-card">
-                    <h3>TOTAL INCOME</h3>
-                    <h2 id="income"></h2>
-                </div>
-
-                <div class="display-card">
-                    <h3>TOTAL EXPENSES</h3>
-                    <h2 id="expenses"></h2>
-                </div>
-            </div>
-        </main>
-    </div>
     <script src="./dist/bundle.js"></script>
 </body>
+
 </html>

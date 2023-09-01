@@ -23,7 +23,7 @@ button {
 }
 
 body {
-  background-color: var(--light-sage);
+  background-color: #fefefefe;
   width: 100vw;
   height: 100vh;
   font-family: "Roboto", sans-serif;
@@ -32,205 +32,43 @@ body {
   align-items: center;
 }
 
-.header-container {
-  height: 6.5rem;
+.gambar {
+  width: 100vw;
+  height: 50vh;
+}
+
+.school-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  width: 100vw;
+  justify-content: center; /* Center the school cards horizontally */
 }
 
-.content-container {
-  display: flex;
-  justify-content: center;
-}
-
-.aside-container {
-  position: relative;
-  width: 10.5rem;
-  height: 48rem;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: var(--mossy-green);
-  /* margin-left: 2rem; */
-  border-radius: 50px;
-  
-}
-
-.navbar-pic {
-  width: 5.75rem;
-  height: 5.625rem;
-  margin: 2rem;
-  margin-bottom: 4rem;
-}
-
-.nav-links {
-  list-style: none;
-}
-
-.nav-links li {
-  margin: 1rem;
+.school-card {
+  width: 415px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  background-color: #ffffff;
+  border-radius: 12px;
   text-align: center;
+  display: flex; /* Make each school card a flex container */
+  flex-direction: column; /* Stack the content vertically */
 }
 
-.nav-links  a {
-  text-decoration: none;
-  color: var(--light-sage);
+.school-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
 }
 
-.nav-links a:hover {
-  color: var(--cozy--brown);
-}
-
-/* .nav-links a:active {
-  color: var(--mossy-green);
-} */
-
-.nav-links hr {
-  width: 10.5rem;
-  border: none;
-  border-top: 1px solid var(--muted-green);
-}
-
-.main-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 2rem;
-}
-
-.form-wrapper {
-  display: block;
-  margin-top: 136px;
-}
-
-.form-input {
-  display: flex;
-  align-items: center;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  margin: 0 2rem;
-  align-items: center;
-}
-
-.add-btn {
-  background-color: var(--mint-green);
-  color: var(--cozy--brown);;
-  width: 4.625rem;
-  height: 1.875rem;
-  margin-top: 0.25rem;
-  margin-left: -11.5625rem;
-  border-radius: 50px;
-}
-
-.form-wrapper {
-  display: flex;
-  flex-direction: row;
-}
-
-.input-box {
-  background-color: var(--peachy-beige);
-  color: var(--cozy--brown);
-  border-radius: 50px;
-  height: 1.875rem;
-  border: 1px solid var(--cozy--brown);
-  /* padding-left: 0.5rem; */
-}
-
-
-.big {
-  width: 25rem;
-}
-
-.medium {
-  width: 15.5625rem;
-}
-
-label {
-  display: block;
-  color: var(--cozy--brown);
-}
-
-.transaction-text {
-  margin-top: 2rem;
-  color: var(--cozy--brown);
-}
-
-.transaction-list {
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  width: 25rem;
-  height: 9.375rem;
-  background-color: var(--peachy-beige);
-  border: 1px solid var(--mint-green);
-  overflow: auto;
-}
-
-.transaction-text, .transaction-list {
-  margin-left: -158px;
-}
-
-.transaction-list li {
-  color: var(--cozy--brown);
+/* Add some spacing between individual ratings */
+.school-card ul {
   list-style: none;
+  padding: 0;
 }
 
-.bottom-wrapper {
-  display: flex;
-  gap: 2rem;
-  margin-top: 8.4375rem;
-
+.school-card ul li {
+  margin-bottom: 5px;
 }
 
-.display-card {
-  width: 15.9375rem;
-  height: 7.25rem;
-  color: var(--cozy--brown);
-  background-color: var(--mossy-green);
-}
-
-
-@media (max-width: 576px) {
-  .form-input {
-    flex-direction: column;
-    justify-content: center;
-    margin-left: -3.5rem;
-  }
-
-  .big {
-    width: 15.5625rem;
-  }
-
-  .add-btn {
-    margin-left: -3.5625rem;
-  }
-
-  .bottom-wrapper {
-    flex-direction: column;
-    margin-left: -3.125rem;
-  }
-
-  .aside-container {
-    display: none;
-  }
-
-  .transaction-text, .transaction-list {
-    margin-left: -83px;
-}
-
-.transaction-list {
-  width: 80vw;
-}
-
-}
-
-@media (max-width: 820px) {
-  .aside-container {
-    display: none;
-  }
-}
